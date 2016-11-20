@@ -1,4 +1,4 @@
-package com.discover.neural.neuralstart;
+package com.discover.neural.engine;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
