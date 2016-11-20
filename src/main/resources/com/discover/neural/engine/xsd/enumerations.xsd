@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://neural.discover.com/enumerations" 
+	xmlns:tns="http://neural.discover.com/enumerations"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<xs:simpleType name="atomic_value_types">
+  		<xs:restriction base="xs:string">
+    		<xs:enumeration value="string"/>
+    		<xs:enumeration value="integer"/>
+    		<xs:enumeration value="double"/>
+    		<xs:enumeration value="complex"/>
+  		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="signal_source">
+  		<xs:restriction base="xs:string">
+    		<xs:enumeration value="neuron"/>
+    		<xs:enumeration value="input" />
+  		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="standard_functions">
+  		<xs:restriction base="xs:string">
+    		<xs:enumeration value="identity"/>
+    		<xs:enumeration value="custom" />
+    		<xs:enumeration value="expression" />
+    		<xs:enumeration value="atomic" />
+  		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="neuron_type_enum">
+  		<xs:restriction base="xs:string">
+    		<xs:enumeration value="output" />
+  		</xs:restriction>
+	</xs:simpleType>
+
+</schema>

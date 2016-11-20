@@ -1,0 +1,153 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+<!-- General Project Section -->
+  <groupId>com.discover.neural</groupId>
+  <artifactId>engine</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>engine</name>
+  <url>http://maven.apache.org</url>
+
+<!-- Properties Section -->
+  <properties>
+    <!-- Project Specific Properties -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jdk.version>1.8</jdk.version>
+    <main.class>com.discover.neural.engine.NeuralEngine</main.class>
+    <config.directory>../conf/</config.directory>
+    
+    <!-- Dependancy Versions -->
+    <spring.version>4.3.2.RELEASE</spring.version>
+    <log4j.version>1.2.16</log4j.version>
+    <junit.version>4.12</junit.version>
+    <exec.maven.plugin.version>1.2.1</exec.maven.plugin.version>
+    <maven.compiler.plugin.version>2.1</maven.compiler.plugin.version>
+    <maven.jar.plugin.version>3.0.0</maven.jar.plugin.version>
+    <spring.oxm.version>3.0.0.RELEASE</spring.oxm.version>
+    <commons.lang.version>2.6</commons.lang.version>
+    <symja.version>2016.07.24</symja.version>
+	<jodatime.version>2.4</jodatime.version>
+	<onejar.version>1.4.4</onejar.version>
+  </properties>
+
+<!-- Dependency Section -->
+  <dependencies>
+  	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-core</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>${log4j.version}</version>
+		<scope>runtime</scope>
+	</dependency>
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-oxm</artifactId>
+	    <version>${spring.oxm.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>commons-lang</groupId>
+	    <artifactId>commons-lang</artifactId>
+	    <version>${commons.lang.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.sourceforge.symja</groupId>
+  		<artifactId>symja-core</artifactId>
+  		<version>${symja.version}</version>
+  	</dependency>
+  	<dependency>
+		<groupId>joda-time</groupId>
+		<artifactId>joda-time</artifactId>
+		<version>${jodatime.version}</version>
+	</dependency>
+  </dependencies>
+  
+  <!-- Build Section -->
+  <build>
+  	<!-- Resource Section -->
+	<resources>
+        <resource>
+            <directory>src/main/java</directory>
+            <includes>
+                <include>**/*.xml</include>
+            </includes>
+        </resource>
+        <resource>
+            <directory>src/main/resources</directory>
+            <includes>
+                <include>**/*.xml</include>
+                <include>**/*.properties</include>
+            </includes>
+        </resource>
+    </resources>
+    
+    <!-- Plugin Section -->
+	<plugins>
+	 	<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-compiler-plugin</artifactId>
+			  <version>${maven.compiler.plugin.version}</version>
+			  <configuration>
+			    <source>${jdk.version}</source>
+			    <target>${jdk.version}</target>
+			  </configuration>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<version>${maven.jar.plugin.version}</version>
+			<configuration>
+				<archive>
+					<manifest>
+						<addDefaultImplementationEntries>false</addDefaultImplementationEntries>
+						<addClasspath>true</addClasspath>
+						<mainClass>${main.class}</mainClass>
+			     	</manifest>
+			     	<manifestEntries>
+			       		<Class-Path>${config.directory}</Class-Path>
+			     	</manifestEntries>
+			   </archive>
+			 </configuration>
+		</plugin>
+		<plugin>
+	          <groupId>org.codehaus.mojo</groupId>
+	          <artifactId>exec-maven-plugin</artifactId>
+	          <version>${exec.maven.plugin.version}</version>
+	          <configuration>
+	              <mainClass>${main.class}</mainClass>
+	          </configuration>
+	     </plugin>
+	     <plugin>
+			<groupId>com.jolira</groupId>
+		    <artifactId>onejar-maven-plugin</artifactId>
+		    <version>${onejar.version}</version>
+			<executions>
+				  <execution>
+						<goals>
+							<goal>one-jar</goal>
+						</goals>
+				  </execution>
+			</executions>
+		</plugin>
+	 </plugins>
+	 
+  </build>
+  
+</project>

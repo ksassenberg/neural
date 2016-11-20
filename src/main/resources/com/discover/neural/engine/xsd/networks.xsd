@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://neural.discover.com/networks"
+	xmlns:net="http://neural.discover.com/networks"
+	xmlns:tns="http://neural.discover.com/enumerations"
+	attributeFormDefault="unqualified" 
+	elementFormDefault="qualified">
+ 	
+ 	<xs:import namespace="http://neural.discover.com/enumerations" schemaLocation="enumerations.xsd"/>
+ 	
+	<xs:complexType name="abstract-functionType" abstract="true">
+		<xs:attribute type="tns:standard_functions" name="type" use="required"/>
+		<xs:attribute type="xs:string" name="bean-name" use="optional"/>
+		<xs:attribute type="xs:string" name="bean-parameters" use="optional"/>
+		<xs:attribute type="xs:string" name="expression" use="optional"/>
+		<xs:attribute type="xs:string" name="atomic-value" use="optional"/>
+		<xs:attribute type="tns:atomic_value_types" name="atomic-value-type" use="optional"/>
+	</xs:complexType>
+	
+  	<xs:complexType name="signal-functionType">
+		<xs:complexContent>
+			<xs:extension base="net:abstract-functionType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="activation-functionType">
+		<xs:complexContent>
+			<xs:extension base="net:abstract-functionType"/>
+		</xs:complexContent>
+	</xs:complexType>
+  
+  	<xs:complexType name="inputSignalType">
+  		<xs:sequence>
+      		<xs:element type="net:signal-functionType" name="signal-function" maxOccurs="1" minOccurs="1"/>
+    	</xs:sequence>
+    	<xs:attribute type="xs:string" name="id" use="required"/>
+  	</xs:complexType>
+  	
+  	<xs:complexType name="inputSignalsType">
+    	<xs:sequence>
+      		<xs:element type="net:inputSignalType" name="input-signal" maxOccurs="unbounded" minOccurs="1"/>
+    	</xs:sequence>
+  	</xs:complexType>
+  	
+  	<xs:complexType name="signalSourceType">
+    	<xs:attribute type="xs:string" name="id" use="required"/>
+    	<xs:attribute type="tns:signal_source" name="type" use="required"/>
+  	</xs:complexType>
+  
+	<xs:complexType name="synapseType">
+    	<xs:sequence>
+    		<xs:choice>
+      			<xs:element type="net:signalSourceType" name="source" minOccurs="1" maxOccurs="1"/>
+      		</xs:choice>
+      		<xs:element type="xs:decimal" name="weight" minOccurs="1" maxOccurs="1"/>
+    	</xs:sequence>
+    	<xs:attribute type="xs:string" name="id" use="required"/>
+	</xs:complexType>
+  
+  	<xs:complexType name="synapsesType">
+    	<xs:sequence>
+      		<xs:element type="net:synapseType" name="synapse" maxOccurs="unbounded" minOccurs="1"/>
+    	</xs:sequence>
+  	</xs:complexType>
+  
+  	<xs:complexType name="neuronType">
+    	<xs:sequence>
+      		<xs:element type="xs:decimal" name="bias" maxOccurs="1" minOccurs="1"/>
+      		<xs:element type="net:activation-functionType" name="activation-function" maxOccurs="1" minOccurs="1"/>
+      		<xs:element type="net:synapsesType" name="synapses" maxOccurs="1" minOccurs="1"/>
+    	</xs:sequence>
+    	<xs:attribute type="xs:string" name="id" use="required"/>
+    	<xs:attribute type="tns:neuron_type_enum" name="type" use="optional"/>
+  	</xs:complexType>
+  
+  	<xs:complexType name="neuronsType">
+    	<xs:sequence>
+      		<xs:element type="net:neuronType" name="neuron" maxOccurs="unbounded" minOccurs="1"/>
+    	</xs:sequence>
+    	<xs:attribute type="xs:string" name="name" use="optional"/>
+  	</xs:complexType>
+  
+  	<xs:complexType name="networkType">
+    	<xs:sequence>
+      		<xs:element type="net:neuronsType" name="neurons" maxOccurs="1" minOccurs="1"/>
+      		<xs:element type="net:inputSignalsType" name="input-signals" maxOccurs="1" minOccurs="0"/>
+    	</xs:sequence>
+    	<xs:attribute type="xs:string" name="id" use="required"/>
+  	</xs:complexType>
+  	
+  	<xs:element name="network" type="net:networkType"/>
+  
+	
+</xs:schema>
